@@ -102,7 +102,9 @@ def casoRM(archivo_df):
     # Se recibe y se elimminan los datos que no se considentan
         df_rm = archivo_df
         df_rm = df_rm[~((df_rm['Vendedor']>1) & (df_rm["Vendedor"] <30))]
-        df_rm = df_rm.drop(['Sucursal', 'Nombre Sucursal', 'Observacion', 'Vendedor', 'Atencion', 'N° Factura', 'Fec-A-Partir-De', 'Fec-Imp.', 'Fec-Desp.', 'Ubicacion', 'Precio_Lp', 'Precio_Bol', 'Dcto', 'Q-Ped', 'Q-Desp', 'Mto Pedido', 'Mto Desp', 'Largo_Caj', 'Ancho_Caj', 'Alto_Caj', 'Stk_Otros', 'Stk_Lib', '1A1-STOCK', '1J1-JAULA', '1P1-PISO', '1P2-PISO', '3I3-RACK', '3I7-RACK', '6I2-RACK3', 'Comentarios Articulo'], axis=1)
+        columns_to_drop = ['Sucursal', 'Nombre Sucursal', 'Observacion', 'Vendedor', 'Atencion', 'N° Factura', 'Fec-A-Partir-De', 'Fec-Imp.', 'Fec-Desp.', 'Ubicacion', 'Precio_Lp', 'Precio_Bol', 'Dcto', 'Q-Ped', 'Q-Desp', 'Mto Pedido', 'Mto Desp', 'Largo_Caj', 'Ancho_Caj', 'Alto_Caj', 'Stk_Otros', 'Stk_Lib', '1A1-STOCK', '1J1-JAULA', '1P1-PISO', '1P2-PISO', '3I3-RACK', '3I7-RACK', '6I2-RACK3', 'Comentarios Articulo']
+        columns_to_drop = [col for col in columns_to_drop if col in df_rm.columns]
+        df_rm = df_rm.drop(columns=columns_to_drop, axis=1)
         
     # Se hacen cambios en el formato del excel recibido 
         df_rm['Va'] = 'Si'
@@ -230,9 +232,16 @@ def casoRegiones(archivo_df):
     
     # Se recibe y se elimminan los datos que no se considentan
         df_rm = archivo_df
+        columns_to_check = ['Sucursal', 'Nombre Sucursal', 'F12', 'Vendedor', 'Atencion', 'N° Factura', 
+                   'Fec-Vcto', 'Fec-A-Partir-De', 'Fec-Imp.', 'Fec-Desp.', 'Ubicacion', 
+                   'Precio_Lp', 'Precio_Bol', 'Dcto', 'Q-Ped', 'Q-Desp', 'Mto Pedido', 
+                   'Mto Desp', 'Largo_Caj', 'Ancho_Caj', 'Alto_Caj', 'Stk_Otros', 'Stk_Lib', 
+                   '1A1-STOCK', '1J1-JAULA', '1P1-PISO', '1P2-PISO', '3I3-RACK', '3I7-RACK', 
+                   '6I2-RACK3', 'Comentarios Articulo']
         df_rm = df_rm[~((df_rm["Vendedor"] >30))]
         df_rm = df_rm[~((df_rm['Vendedor']<4))]
-        df_rm = df_rm.drop(['Sucursal', 'Nombre Sucursal', 'F12', 'Vendedor', 'Atencion', 'N° Factura', 'Fec-Vcto', 'Fec-A-Partir-De', 'Fec-Imp.', 'Fec-Desp.', 'Ubicacion', 'Precio_Lp', 'Precio_Bol', 'Dcto', 'Q-Ped', 'Q-Desp', 'Mto Pedido', 'Mto Desp', 'Largo_Caj', 'Ancho_Caj', 'Alto_Caj', 'Stk_Otros', 'Stk_Lib', '1A1-STOCK', '1J1-JAULA', '1P1-PISO', '1P2-PISO', '3I3-RACK', '3I7-RACK', '6I2-RACK3', 'Comentarios Articulo'], axis=1)
+        columns_to_drop = [col for col in columns_to_check if col in df_rm.columns]
+        df_rm = df_rm.drop(columns=columns_to_drop)
         
     # Se hacen cambios en el formato del excel recibido 
         df_rm = df_rm.rename(columns= {'Observacion': 'Transporte'})
